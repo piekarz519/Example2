@@ -6,11 +6,29 @@ import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
     private GLSurfaceView mGLSurfaceView;
+    private boolean rendererSet=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        String x= "lel";
-
+        mGLSurfaceView = new GLSurfaceView(this);
+        mGLSurfaceView.setEGLContextClientVersion(2);
+        mGLSurfaceView.setRenderer(new MyRenderer());
+        rendererSet = true;
+        setContentView(mGLSurfaceView);
     }
-}
+
+        protected void onPause(){
+        super.onPause();
+        if(rendererSet){
+            mGLSurfaceView.onPause();
+        }
+    }
+
+        protected void onResume(){
+            super.onResume();
+            if(rendererSet){
+                mGLSurfaceView.onResume();
+            }
+        }
+    }
+
