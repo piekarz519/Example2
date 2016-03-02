@@ -4,6 +4,8 @@ import static android.opengl.GLES20.GL_COLOR_BUFFER_BIT;
 import static android.opengl.GLES20.glClear;
 import static android.opengl.GLES20.glClearColor;
 import static android.opengl.GLES20.glViewport;
+
+import android.content.Context;
 import android.opengl.GLSurfaceView.Renderer;
 
 
@@ -16,22 +18,32 @@ import javax.microedition.khronos.opengles.GL10;
  */
 
 public class MyRenderer implements Renderer {
+    private final Context context;
     private static final int POSITION_COMPONENT_COUNT = 2;
 
-    float[] tableVertices = {
-            0f, 0f, 0f,
-            9f, 14f, 0f,
-            0f, 14f, 0f,
+    public MyRenderer(Context context) {
+        this.context=context;
 
-            0f, 0f, 0f,
-            9f, 0f, 0f,
-            9f, 14f, 0f
-    };
+
+        float[] tableVertices = {
+                0f, 0f, 0f,
+                9f, 14f, 0f,
+                0f, 14f, 0f,
+
+                0f, 0f, 0f,
+                9f, 0f, 0f,
+                9f, 14f, 0f
+        };
+    }
 
 
     @Override
     public void onSurfaceCreated(GL10 glUnused, EGLConfig config) {
         glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
+        String vertexShaderSource = TextResourceReader
+                .readTextFileFromResource(context, R.raw.simple_vertex_shader);
+        String fragmentShaderSource = TextResourceReader
+                .readTextFileFromResource(context, R.raw.simple_fragment_shader);
 
 
     }
